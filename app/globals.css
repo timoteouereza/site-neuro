@@ -151,7 +151,7 @@
   /* Enhanced card styling with subtle borders for contrast */
   .card-enhanced {
     border: 2px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
   }
 }
 
@@ -167,4 +167,28 @@
   66% {
     transform: translateY(-20px) rotate(-1deg);
   }
+}
+
+/* ==== FIX global para alinhar os CTAs de WhatsApp (ícone + texto) ==== */
+a[data-evt^="whatsapp"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;            /* espaço entre ícone e texto */
+  line-height: 1 !important;       /* evita texto “subindo” */
+  white-space: nowrap !important;  /* impede quebra estranha */
+  text-decoration: none !important;
+}
+
+a[data-evt^="whatsapp"] > svg {
+  width: 24px !important;
+  height: 24px !important;
+  flex-shrink: 0 !important;       /* ícone não deforma */
+  display: block !important;
+}
+
+/* Hero usa ícone maior */
+a[data-evt="whatsapp_click_hero"] > svg {
+  width: 32px !important;
+  height: 32px !important;
 }
