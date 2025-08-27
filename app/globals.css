@@ -241,3 +241,24 @@ a[data-evt="whatsapp_click_hero"] svg {
   width: 32px !important;
   height: 32px !important;
 }
+/* Band-aid: quando o HTML vem como <button data-evt="whatsapp..."><a>...</a></button> */
+button[data-evt^="whatsapp"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+}
+
+button[data-evt^="whatsapp"] > a {
+  /* “some” a caixa do <a>, deixando ícone e texto receberem o layout do botão */
+  display: contents !important;
+}
+
+button[data-evt^="whatsapp"] svg {
+  width: 24px !important;
+  height: 24px !important;
+  flex-shrink: 0 !important;
+}
