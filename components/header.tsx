@@ -3,34 +3,21 @@
 import Link from "next/link"
 import { useEffect, useMemo, useState } from "react"
 import { Menu, X, PhoneCall } from "lucide-react"
-// REMOVIDO: import { FaWhatsapp } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { site, buildWhatsAppHref } from "@/lib/site"
 import { useUtm } from "@/hooks/use-utm"
 import { track } from "@/lib/tracking"
 
-// Ícone WhatsApp como SVG inline para evitar estilos estranhos de libs
 const WhatsIcon = ({ size = 24 }: { size?: number }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    aria-hidden="true"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.031-.966-.273-.099-.472-.149-.67.149-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.607.134-.133.297-.347.446-.52.149-.173.198-.297.297-.495.099-.198.05-.372-.025-.521-.074-.149-.669-1.611-.916-2.206-.242-.58-.487-.501-.67-.51-.173-.009-.372-.011-.57-.011-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479s1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.718 2.006-1.411.248-.694.248-1.288.173-1.411-.074-.124-.272-.198-.57-.347z" />
   </svg>
 )
 
-// classes reutilizáveis dos CTAs WhatsApp (desktop + mobile)
-const waBtnClasses =
-  "inline-flex items-center justify-center gap-3 " +
-  "px-8 py-4 text-lg font-bold rounded-2xl border-2 border-white/70 " +
-  "bg-emerald-500 hover:brightness-95 text-white shadow-md " +
-  "whitespace-nowrap transition-colors " +
-  "!h-auto !leading-none"
+const waClasses =
+  "relative inline-flex items-center justify-center h-12 px-5 pl-12 rounded-2xl border-2 border-white/70 " +
+  "bg-emerald-500 text-white text-lg font-bold hover:brightness-95 transition-colors whitespace-nowrap"
 
 export default function Header() {
   const [open, setOpen] = useState(false)
@@ -40,8 +27,7 @@ export default function Header() {
     () =>
       buildWhatsAppHref({
         utm,
-        message:
-          "Olá, vim através da nova página do Dr. Mohamad e gostaria de saber mais sobre a minha consulta",
+        message: "Olá, vim através da nova página do Dr. Mohamad e gostaria de saber mais sobre a minha consulta",
       }),
     [utm],
   )
@@ -73,12 +59,12 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex-1 flex justify-end">
+        <div className="flex flex-1 justify-end">
           <div className="hidden md:flex">
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
                 <Button
-                  className="bg-sky-500 hover:bg-sky-600 border border-white/70 text-lg font-bold px-6 py-3"
+                  className="border border-white/70 bg-sky-500 px-6 py-3 text-lg font-bold hover:bg-sky-600"
                   onClick={() => track("cta_click", { where: "header", type: "sheet" })}
                   data-evt="cta_agendar_header"
                 >
@@ -92,38 +78,32 @@ export default function Header() {
                 </SheetHeader>
 
                 <div className="mt-4 grid gap-3">
-                  {/* WhatsApp CTA (desktop sheet) — link puro para evitar classes do Button */}
+                  {/* WhatsApp CTA (anchor puro) */}
                   <a
                     href={whatsHref}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => track("whatsapp_click", { where: "header_sheet" })}
                     data-evt="whatsapp_click"
-                    className={waBtnClasses}
+                    className={waClasses}
                   >
-                    <WhatsIcon size={24} />
-                    <span className="block leading-none">Agendar agora pelo WhatsApp</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2">
+                      <WhatsIcon size={24} />
+                    </span>
+                    <span className="leading-none">Agendar agora pelo WhatsApp</span>
                   </a>
 
-                  <Button
-                    variant="outline"
-                    className="h-12 bg-transparent text-lg font-bold"
-                    asChild
+                  <Button variant="outline" className="h-12 bg-transparent text-lg font-bold" asChild data-evt="form_open"
                     onClick={() => track("form_click", { where: "header_sheet" })}
-                    data-evt="form_open"
                   >
                     <Link href="#formulario">Preencher formulário de consulta</Link>
                   </Button>
 
-                  <Button
-                    variant="ghost"
-                    className="h-12 text-lg font-bold flex items-center gap-2"
-                    asChild
-                    data-evt="phone_click"
+                  <Button variant="ghost" className="h-12 text-lg font-bold" asChild data-evt="phone_click"
                     onClick={() => track("phone_click", { where: "header_sheet" })}
                   >
-                    <a href={site.phoneHref}>
-                      <PhoneCall className="w-6 h-6" />
+                    <a href={site.phoneHref} className="inline-flex items-center gap-2">
+                      <PhoneCall className="h-6 w-6" />
                       Ligar para {site.phoneDisplay}
                     </a>
                   </Button>
@@ -163,7 +143,7 @@ export default function Header() {
                 <Sheet>
                   <SheetTrigger asChild>
                     <Button
-                      className="h-12 w-full bg-sky-500 hover:bg-sky-600 border border-white/70 text-lg font-bold"
+                      className="h-12 w-full border border-white/70 bg-sky-500 text-lg font-bold hover:bg-sky-600"
                       data-evt="cta_agendar_header_mobile"
                       onClick={() => track("cta_click", { where: "header_mobile", type: "sheet" })}
                     >
@@ -177,38 +157,31 @@ export default function Header() {
                     </SheetHeader>
 
                     <div className="mt-4 grid gap-3">
-                      {/* WhatsApp CTA (mobile sheet) — link puro e largura total */}
                       <a
                         href={whatsHref}
                         target="_blank"
                         rel="noopener noreferrer"
+                        className={`${waClasses} w-full`}
                         data-evt="whatsapp_click"
                         onClick={() => track("whatsapp_click", { where: "header_mobile_sheet" })}
-                        className={`${waBtnClasses} w-full`}
                       >
-                        <WhatsIcon size={24} />
-                        <span className="block leading-none">Agendar agora pelo WhatsApp</span>
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2">
+                          <WhatsIcon size={24} />
+                        </span>
+                        <span className="leading-none">Agendar agora pelo WhatsApp</span>
                       </a>
 
-                      <Button
-                        variant="outline"
-                        className="h-12 bg-transparent text-lg font-bold"
-                        asChild
-                        data-evt="form_open"
+                      <Button variant="outline" className="h-12 bg-transparent text-lg font-bold" asChild data-evt="form_open"
                         onClick={() => track("form_click", { where: "header_mobile_sheet" })}
                       >
                         <Link href="#formulario">Preencher formulário de consulta</Link>
                       </Button>
 
-                      <Button
-                        variant="ghost"
-                        className="h-12 text-lg font-bold flex items-center gap-2"
-                        asChild
-                        data-evt="phone_click"
+                      <Button variant="ghost" className="h-12 text-lg font-bold" asChild data-evt="phone_click"
                         onClick={() => track("phone_click", { where: "header_mobile_sheet" })}
                       >
-                        <a href={site.phoneHref}>
-                          <PhoneCall className="w-6 h-6" />
+                        <a href={site.phoneHref} className="inline-flex items-center gap-2">
+                          <PhoneCall className="h-6 w-6" />
                           Ligar para {site.phoneDisplay}
                         </a>
                       </Button>
