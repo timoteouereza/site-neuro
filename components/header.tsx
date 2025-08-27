@@ -38,6 +38,20 @@ export default function Header() {
     { href: "#contato", label: "Contato" },
   ]
 
+  const waBtnClasses =
+    "h-12 inline-flex items-center justify-center gap-3 leading-none " +
+    "px-5 rounded-2xl border-2 border-white/70 " +
+    "bg-emerald-500 hover:brightness-95 text-white text-lg font-bold " +
+    "[text-wrap:nowrap]"
+
+  const WaIcon = () => (
+    <FaWhatsapp className="block w-6 h-6 shrink-0" aria-hidden="true" />
+  )
+
+  const WaText = ({ children }: { children: React.ReactNode }) => (
+    <span className="block leading-none">{children}</span>
+  )
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center px-4">
@@ -63,6 +77,7 @@ export default function Header() {
                   Agendar Consulta
                 </Button>
               </SheetTrigger>
+
               <SheetContent side="right" className="w-full sm:max-w-md">
                 <SheetHeader>
                   <SheetTitle>Agendar Consulta</SheetTitle>
@@ -76,12 +91,10 @@ export default function Header() {
                     rel="noopener noreferrer"
                     onClick={() => track("whatsapp_click", { where: "header_sheet" })}
                     data-evt="whatsapp_click"
-                    className="h-12 inline-flex items-center justify-center gap-3 leading-none
-                               px-5 rounded-2xl border-2 border-white/70
-                               bg-emerald-500 hover:brightness-95 text-white text-lg font-bold"
+                    className={waBtnClasses}
                   >
-                    <FaWhatsapp className="w-6 h-6 shrink-0" aria-hidden="true" />
-                    <span>Agendar agora pelo WhatsApp</span>
+                    <WaIcon />
+                    <WaText>Agendar agora pelo WhatsApp</WaText>
                   </a>
 
                   <Button
@@ -148,6 +161,7 @@ export default function Header() {
                       Agendar Consulta
                     </Button>
                   </SheetTrigger>
+
                   <SheetContent side="bottom" className="min-h-[40vh]">
                     <SheetHeader>
                       <SheetTitle>Agendar Consulta</SheetTitle>
@@ -161,12 +175,10 @@ export default function Header() {
                         rel="noopener noreferrer"
                         data-evt="whatsapp_click"
                         onClick={() => track("whatsapp_click", { where: "header_mobile_sheet" })}
-                        className="h-12 inline-flex items-center justify-center gap-3 leading-none
-                                   px-5 rounded-2xl border-2 border-white/70
-                                   bg-emerald-500 hover:brightness-95 text-white text-lg font-bold w-full"
+                        className={`${waBtnClasses} w-full`}
                       >
-                        <FaWhatsapp className="w-6 h-6 shrink-0" aria-hidden="true" />
-                        <span>Agendar agora pelo WhatsApp</span>
+                        <WaIcon />
+                        <WaText>Agendar agora pelo WhatsApp</WaText>
                       </a>
 
                       <Button
