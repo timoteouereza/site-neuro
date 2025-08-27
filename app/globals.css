@@ -169,26 +169,31 @@
   }
 }
 
-/* ==== FIX global para alinhar os CTAs de WhatsApp (ícone + texto) ==== */
+/* ==== FIX global definitivo para os CTAs de WhatsApp ==== */
 a[data-evt^="whatsapp"] {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 12px !important;            /* espaço entre ícone e texto */
-  line-height: 1 !important;       /* evita texto “subindo” */
-  white-space: nowrap !important;  /* impede quebra estranha */
+  gap: 12px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
   text-decoration: none !important;
 }
 
-a[data-evt^="whatsapp"] > svg {
+a[data-evt^="whatsapp"] > svg,
+a[data-evt^="whatsapp"] svg {
+  display: block !important;
   width: 24px !important;
   height: 24px !important;
-  flex-shrink: 0 !important;       /* ícone não deforma */
-  display: block !important;
+  flex-shrink: 0 !important;
+  position: static !important;
+  margin: 0 !important;
+  vertical-align: middle !important;
 }
 
 /* Hero usa ícone maior */
-a[data-evt="whatsapp_click_hero"] > svg {
+a[data-evt="whatsapp_click_hero"] > svg,
+a[data-evt="whatsapp_click_hero"] svg {
   width: 32px !important;
   height: 32px !important;
 }
