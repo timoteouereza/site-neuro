@@ -2,13 +2,25 @@
 
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { FaWhatsapp } from "react-icons/fa"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { buildWhatsAppHref, conditions } from "@/lib/site"
 import { useUtm } from "@/hooks/use-utm"
 import { track } from "@/lib/tracking"
 import ConditionCard from "./condition-card"
+
+// Ícone do WhatsApp como SVG interno (evita estilos estranhos de libs)
+const WhatsIcon = ({ size = 32 }: { size?: number }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.031-.966-.273-.099-.472-.149-.67.149-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.607.134-.133.297-.347.446-.52.149-.173.198-.297.297-.495.099-.198.05-.372-.025-.521-.074-.149-.669-1.611-.916-2.206-.242-.58-.487-.501-.67-.51-.173-.009-.372-.011-.57-.011-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479s1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.718 2.006-1.411.248-.694.248-1.288.173-1.411-.074-.124-.272-.198-.57-.347z" />
+  </svg>
+)
 
 export default function Hero() {
   const utm = useUtm()
@@ -17,13 +29,6 @@ export default function Hero() {
     message:
       "Olá, vim através da nova página do Dr. Mohamad e gostaria de saber mais sobre a minha consulta",
   })
-
-  // CTA com layout robusto (ícone + texto sem sobrepor)
-  const WHATS_CTA =
-    "inline-flex items-center justify-center gap-3 leading-none " +
-    "px-8 py-4 text-2xl font-bold rounded-2xl border-2 border-white/70 " +
-    "bg-emerald-500 hover:brightness-95 text-white shadow-md " +
-    "whitespace-nowrap"
 
   const reorganizedConditions = [
     conditions.find((c) => c.id === "avc"),
@@ -87,9 +92,7 @@ export default function Hero() {
           <div className="relative flex flex-col items-center justify-center">
             <div className="relative aspect-[4/5] w-full max-w-lg overflow-hidden rounded-2xl border shadow-sm md:aspect-[3/4] md:max-w-xl">
               <Image
-                src="/dr-mohamad-hero.jpg"
-                // Se sua imagem estiver em /public/images, troque a linha acima para:
-                // src="/images/dr-mohamad-hero.jpg"
+                src="/images/dr-mohamad-hero.jpg" {/* ajuste o caminho conforme onde colocou a imagem */}
                 alt="Dr. Mohamad Ali Hussein - Neurologista especialista em Curitiba"
                 fill
                 priority
@@ -125,17 +128,18 @@ export default function Hero() {
 
         {/* BOTTOM ROW: Centered CTA button and credentials badge */}
         <div className="flex flex-col items-center text-center space-y-4 mt-12">
-          <Button
-            asChild
-            className={WHATS_CTA}
+          {/* CTA do WhatsApp como <a> direto — layout estável */}
+          <a
+            href={whatsHref}
+            target="_blank"
+            rel="noopener noreferrer"
             data-evt="whatsapp_click_hero"
             onClick={() => track("whatsapp_click", { where: "hero_primary" })}
+            className="inline-flex items-center justify-center gap-3 leading-none px-8 py-4 text-2xl font-bold rounded-2xl border-2 border-white/70 bg-emerald-500 hover:brightness-95 text-white shadow-md whitespace-nowrap"
           >
-            <a href={whatsHref} target="_blank" rel="noopener noreferrer">
-              <FaWhatsapp className="w-8 h-8 shrink-0" aria-hidden="true" />
-              <span>Agendar agora pelo WhatsApp</span>
-            </a>
-          </Button>
+            <WhatsIcon size={32} />
+            <span className="block leading-none">Agendar agora pelo WhatsApp</span>
+          </a>
 
           <Badge
             variant="secondary"
