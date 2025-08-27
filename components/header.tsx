@@ -1,15 +1,16 @@
 "use client"
 
 import Link from "next/link"
-import * as React from "react"
 import { useEffect, useMemo, useState } from "react"
 import { Menu, X, PhoneCall } from "lucide-react"
+// REMOVIDO: import { FaWhatsapp } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { site, buildWhatsAppHref } from "@/lib/site"
 import { useUtm } from "@/hooks/use-utm"
 import { track } from "@/lib/tracking"
 
+// Ícone WhatsApp como SVG inline para evitar estilos estranhos de libs
 const WhatsIcon = ({ size = 24 }: { size?: number }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -23,10 +24,13 @@ const WhatsIcon = ({ size = 24 }: { size?: number }) => (
   </svg>
 )
 
+// classes reutilizáveis dos CTAs WhatsApp (desktop + mobile)
 const waBtnClasses =
-  "h-12 inline-flex items-center justify-center gap-3 leading-none " +
-  "px-5 rounded-2xl border-2 border-white/70 " +
-  "bg-emerald-500 hover:brightness-95 text-white text-lg font-bold [text-wrap:nowrap]"
+  "inline-flex items-center justify-center gap-3 " +
+  "px-8 py-4 text-lg font-bold rounded-2xl border-2 border-white/70 " +
+  "bg-emerald-500 hover:brightness-95 text-white shadow-md " +
+  "whitespace-nowrap transition-colors " +
+  "!h-auto !leading-none"
 
 export default function Header() {
   const [open, setOpen] = useState(false)
@@ -88,7 +92,7 @@ export default function Header() {
                 </SheetHeader>
 
                 <div className="mt-4 grid gap-3">
-                  {/* WhatsApp CTA (desktop sheet) */}
+                  {/* WhatsApp CTA (desktop sheet) — link puro para evitar classes do Button */}
                   <a
                     href={whatsHref}
                     target="_blank"
@@ -154,6 +158,7 @@ export default function Header() {
                   </Link>
                 </li>
               ))}
+
               <li className="pt-1">
                 <Sheet>
                   <SheetTrigger asChild>
@@ -172,7 +177,7 @@ export default function Header() {
                     </SheetHeader>
 
                     <div className="mt-4 grid gap-3">
-                      {/* WhatsApp CTA (mobile sheet) */}
+                      {/* WhatsApp CTA (mobile sheet) — link puro e largura total */}
                       <a
                         href={whatsHref}
                         target="_blank"
