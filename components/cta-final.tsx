@@ -11,11 +11,16 @@ export default function CTAFinal() {
   const utm = useUtm()
   const href = buildWhatsAppHref({
     utm,
-    message: "Olá, vim através da nova página do Dr. Mohamad e gostaria de saber mais sobre a minha consulta",
+    message:
+      "Olá, vim através da nova página do Dr. Mohamad e gostaria de saber mais sobre a minha consulta",
   })
 
+  // Layout robusto para o botão (ícone + texto sem sobrepor)
   const WHATS_CTA =
-    "inline-flex items-center gap-3 px-12 py-6 text-3xl font-bold bg-emerald-400 hover:bg-emerald-500 text-emerald-950 border border-white/70 rounded-lg shadow-sm transition-colors"
+    "inline-flex items-center justify-center gap-3 leading-none " +
+    "px-12 py-6 text-3xl font-bold rounded-2xl border-2 border-white/70 " +
+    "bg-emerald-500 hover:brightness-95 text-white shadow-md whitespace-nowrap " +
+    "w-full md:w-auto"
 
   return (
     <section aria-label="CTA final" className="border-t bg-muted/30 py-16">
@@ -24,25 +29,28 @@ export default function CTAFinal() {
           <h2 className="text-6xl sm:text-7xl font-bold leading-tight">
             Pronto(a) para cuidar da sua saúde neurológica?
           </h2>
-          <p className="mt-4 text-xl text-white" style={{ textShadow: "1px 1px 2px rgba(0, 0, 0, 0.7)" }}>
+          <p
+            className="mt-4 text-xl text-white"
+            style={{ textShadow: "1px 1px 2px rgba(0, 0, 0, 0.7)" }}
+          >
             Clique abaixo para agendar agora.
           </p>
 
           <div className="mt-8">
             <Button
               asChild
-              variant="outline"
               className={WHATS_CTA}
               data-evt="whatsapp_final"
               onClick={() => track("whatsapp_click", { where: "final" })}
             >
               <a href={href} target="_blank" rel="noopener noreferrer">
-                <FaWhatsapp className="w-8 h-8" aria-hidden="true" />
-                Chamar no WhatsApp
+                <FaWhatsapp className="w-8 h-8 shrink-0" aria-hidden="true" />
+                <span>Chamar no WhatsApp</span>
               </a>
             </Button>
           </div>
         </div>
+
         <div className="relative">
           <Image
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Dr.%20Mohamad_013_INSTAGRAM.jpg-kscikGn7yzMUp7on4fslUScx1mMN9l.jpeg"
