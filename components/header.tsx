@@ -4,7 +4,6 @@ import Link from "next/link"
 import * as React from "react"
 import { useEffect, useMemo, useState } from "react"
 import { Menu, X, PhoneCall } from "lucide-react"
-// REMOVIDO: import { FaWhatsapp } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { site, buildWhatsAppHref } from "@/lib/site"
@@ -22,7 +21,7 @@ const WhatsIcon = ({ size = 24 }: { size?: number }) => (
   >
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.031-.966-.273-.099-.472-.149-.67.149-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.607.134-.133.297-.347.446-.52.149-.173.198-.297.297-.495.099-.198.05-.372-.025-.521-.074-.149-.669-1.611-.916-2.206-.242-.58-.487-.501-.67-.51-.173-.009-.372-.011-.57-.011-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479s1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.718 2.006-1.411.248-.694.248-1.288.173-1.411-.074-.124-.272-.198-.57-.347z" />
   </svg>
-);
+)
 
 const waBtnClasses =
   "h-12 inline-flex items-center justify-center gap-3 leading-none " +
