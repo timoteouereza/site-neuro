@@ -4,63 +4,30 @@ import Link from "next/link"
 import * as React from "react"
 import { useEffect, useMemo, useState } from "react"
 import { Menu, X, PhoneCall } from "lucide-react"
-import { FaWhatsapp } from "react-icons/fa"
+// REMOVIDO: import { FaWhatsapp } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { site, buildWhatsAppHref } from "@/lib/site"
 import { useUtm } from "@/hooks/use-utm"
 import { track } from "@/lib/tracking"
 
-const waStyleBase: React.CSSProperties = {
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: 12,                // ~gap-3
-  lineHeight: 1,          // leading-none
-  height: 48,             // h-12
-  padding: "0 20px",      // px-5
-  borderRadius: 16,       // rounded-2xl
-  border: "2px solid rgba(255,255,255,0.7)",
-  background: "#25D366",  // verde WhatsApp
-  color: "#fff",
-  fontSize: "1.125rem",   // text-lg
-  fontWeight: 700,        // font-bold
-  whiteSpace: "nowrap",
-  textDecoration: "none",
-}
+const WhatsIcon = ({ size = 24 }: { size?: number }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.031-.966-.273-.099-.472-.149-.67.149-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.607.134-.133.297-.347.446-.52.149-.173.198-.297.297-.495.099-.198.05-.372-.025-.521-.074-.149-.669-1.611-.916-2.206-.242-.58-.487-.501-.67-.51-.173-.009-.372-.011-.57-.011-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479s1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.718 2.006-1.411.248-.694.248-1.288.173-1.411-.074-.124-.272-.198-.57-.347z" />
+  </svg>
+);
 
-const waIconStyle: React.CSSProperties = {
-  display: "block",
-  width: 24,
-  height: 24,
-  flexShrink: 0,
-}
-
-function WaLink({
-  href,
-  where,
-  full,
-  children,
-}: {
-  href: string
-  where: string
-  full?: boolean
-  children: React.ReactNode
-}) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={() => track("whatsapp_click", { where })}
-      data-evt="whatsapp_click"
-      style={{ ...waStyleBase, width: full ? "100%" : undefined }}
-    >
-      <FaWhatsapp style={waIconStyle} aria-hidden="true" />
-      <span style={{ display: "block", lineHeight: 1 }}>{children}</span>
-    </a>
-  )
-}
+const waBtnClasses =
+  "h-12 inline-flex items-center justify-center gap-3 leading-none " +
+  "px-5 rounded-2xl border-2 border-white/70 " +
+  "bg-emerald-500 hover:brightness-95 text-white text-lg font-bold [text-wrap:nowrap]"
 
 export default function Header() {
   const [open, setOpen] = useState(false)
@@ -122,9 +89,18 @@ export default function Header() {
                 </SheetHeader>
 
                 <div className="mt-4 grid gap-3">
-                  <WaLink href={whatsHref} where="header_sheet">
-                    Agendar agora pelo WhatsApp
-                  </WaLink>
+                  {/* WhatsApp CTA (desktop sheet) */}
+                  <a
+                    href={whatsHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => track("whatsapp_click", { where: "header_sheet" })}
+                    data-evt="whatsapp_click"
+                    className={waBtnClasses}
+                  >
+                    <WhatsIcon size={24} />
+                    <span className="block leading-none">Agendar agora pelo WhatsApp</span>
+                  </a>
 
                   <Button
                     variant="outline"
@@ -197,9 +173,18 @@ export default function Header() {
                     </SheetHeader>
 
                     <div className="mt-4 grid gap-3">
-                      <WaLink href={whatsHref} where="header_mobile_sheet" full>
-                        Agendar agora pelo WhatsApp
-                      </WaLink>
+                      {/* WhatsApp CTA (mobile sheet) */}
+                      <a
+                        href={whatsHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-evt="whatsapp_click"
+                        onClick={() => track("whatsapp_click", { where: "header_mobile_sheet" })}
+                        className={`${waBtnClasses} w-full`}
+                      >
+                        <WhatsIcon size={24} />
+                        <span className="block leading-none">Agendar agora pelo WhatsApp</span>
+                      </a>
 
                       <Button
                         variant="outline"
