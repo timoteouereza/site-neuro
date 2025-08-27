@@ -14,11 +14,16 @@ export default function Hero() {
   const utm = useUtm()
   const whatsHref = buildWhatsAppHref({
     utm,
-    message: "Olá, vim através da nova página do Dr. Mohamad e gostaria de saber mais sobre a minha consulta",
+    message:
+      "Olá, vim através da nova página do Dr. Mohamad e gostaria de saber mais sobre a minha consulta",
   })
 
+  // CTA com layout robusto (ícone + texto sem sobrepor)
   const WHATS_CTA =
-    "inline-flex items-center gap-2 px-8 py-4 text-2xl font-bold bg-emerald-400 hover:bg-emerald-500 text-emerald-950 border border-white/70 rounded-lg shadow-sm transition-colors"
+    "inline-flex items-center justify-center gap-3 leading-none " +
+    "px-8 py-4 text-2xl font-bold rounded-2xl border-2 border-white/70 " +
+    "bg-emerald-500 hover:brightness-95 text-white shadow-md " +
+    "whitespace-nowrap"
 
   const reorganizedConditions = [
     conditions.find((c) => c.id === "avc"),
@@ -54,7 +59,8 @@ export default function Hero() {
           <h1
             className="text-2xl sm:text-3xl font-bold text-white"
             style={{
-              textShadow: "1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black",
+              textShadow:
+                "1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black",
             }}
           >
             Dr. Mohamad Ali Hussein - Neurologia
@@ -73,7 +79,8 @@ export default function Hero() {
               viewport={{ once: true }}
             >
               Receba o tratamento adequado para as suas queixas e viva
-              <br />o dia‑a‑dia com mais tranquilidade e qualidade de vida!
+              <br />
+              o dia-a-dia com mais tranquilidade e qualidade de vida!
             </motion.h2>
           </div>
 
@@ -81,6 +88,8 @@ export default function Hero() {
             <div className="relative aspect-[4/5] w-full max-w-lg overflow-hidden rounded-2xl border shadow-sm md:aspect-[3/4] md:max-w-xl">
               <Image
                 src="/dr-mohamad-hero.jpg"
+                // Se sua imagem estiver em /public/images, troque a linha acima para:
+                // src="/images/dr-mohamad-hero.jpg"
                 alt="Dr. Mohamad Ali Hussein - Neurologista especialista em Curitiba"
                 fill
                 priority
@@ -91,14 +100,18 @@ export default function Hero() {
 
             <motion.p
               className="text-base text-white sm:text-lg mt-6 text-center max-w-lg"
-              style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.8), -1px -1px 2px rgba(0,0,0,0.5)" }}
+              style={{
+                textShadow:
+                  "1px 1px 2px rgba(0,0,0,0.8), -1px -1px 2px rgba(0,0,0,0.5)",
+              }}
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.05 }}
               viewport={{ once: true }}
             >
-              Buscando avaliação para diagnóstico e tratamento de AVC, TDAH, epilepsia, Alzheimer, Parkinson, Enxaqueca
-              e outras dores de cabeça?{" "}
+              Buscando avaliação para diagnóstico e tratamento de AVC, TDAH,
+              epilepsia, Alzheimer, Parkinson, Enxaqueca e outras dores de
+              cabeça?{" "}
               <span
                 className="decoration-red-500 underline decoration-2 underline-offset-2"
                 style={{ textDecorationColor: "#EF4444" }}
@@ -119,8 +132,8 @@ export default function Hero() {
             onClick={() => track("whatsapp_click", { where: "hero_primary" })}
           >
             <a href={whatsHref} target="_blank" rel="noopener noreferrer">
-              <FaWhatsapp className="w-8 h-8" aria-hidden="true" />
-              Agendar agora pelo WhatsApp
+              <FaWhatsapp className="w-8 h-8 shrink-0" aria-hidden="true" />
+              <span>Agendar agora pelo WhatsApp</span>
             </a>
           </Button>
 
@@ -131,7 +144,7 @@ export default function Hero() {
           >
             <div className="text-center leading-relaxed">
               <div>Atendimento presencial e telemedicina</div>
-              <div>CRM‑PR 36918 · RQE 28146</div>
+              <div>CRM-PR 36918 · RQE 28146</div>
             </div>
           </Badge>
         </div>
